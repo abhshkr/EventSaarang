@@ -25,9 +25,9 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Context context = getApplicationContext();
+        final Context context = getApplicationContext();
         DataBaseHandler db = new DataBaseHandler(context);
-        Event event = db.getEvent(9);
+        Event event = db.getEvent(15);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -39,12 +39,14 @@ public class DetailsActivity extends AppCompatActivity {
         Glide.with(this).load(event.get_image_id()).centerCrop().into(eventImage);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
+            Glide.with(context).load(R.drawable.ic_star_border_white_24dp).into(fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    view.getContext().startActivity(new Intent(view.getContext(), DetailsActivity.class));
+                    // TODO: view.getContext().startActivity(new Intent(view.getContext(), MySchedule.class));
+                    Glide.with(context).load(R.drawable.ic_star_white_24dp).into(fab);
                 }
             });
         }
