@@ -11,27 +11,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.saarang.android.eventsaarang.R;
-
 public class DetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout collapsingToolBar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        assert collapsingToolBar != null;
-        collapsingToolBar.setTitle("Alankar");
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbar.setTitle("Decibels");
 
-        ImageView eventImage = (ImageView) findViewById(R.id.event_image);
-        assert eventImage != null;
-        eventImage.setImageResource(R.drawable.saarang_decibels);
+        final ImageView eventImage = (ImageView) findViewById(R.id.event_image);
+        eventImage.setImageResource(R.drawable.saarang);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EventSaarang</string>
+    <string name="app_name">Events</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_details">DetailsActivity</string>
 </resources>
