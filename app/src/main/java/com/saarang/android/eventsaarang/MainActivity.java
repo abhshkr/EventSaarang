@@ -1,12 +1,16 @@
 package com.saarang.android.eventsaarang;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        List<String> titleList  = Arrays.asList("Music Events", "Classical Events", "Word Games");
+        RecyclerView RV_category= (RecyclerView) findViewById(R.id.rv_categories);
+        RV_category.setLayoutManager(new LinearLayoutManager(this));
+        RV_category.setAdapter( new CategoryAdapter(titleList) );
+
+        RecyclerView RV_eventHorizontal = (RecyclerView) findViewById(R.id.rv_eventHorizontal);
+        RV_eventHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        RV_eventHorizontal.setAdapter( new EventAdapter(titleList) );
+
 
         boolean firstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstRun", true);
         //Add events to the database only once for the first time
@@ -51,11 +64,5 @@ public class MainActivity extends AppCompatActivity {
                 .edit()
                 .putBoolean("firstRun", false)
                 .commit();
-    }
-
-    public void details(View view){
-        Context context = view.getContext();
-        Intent intent = new Intent(context, DetailsActivity.class);
-        startActivity(intent);
     }
 }
