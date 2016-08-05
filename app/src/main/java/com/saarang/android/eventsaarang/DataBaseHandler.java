@@ -13,17 +13,13 @@ import java.util.List;
 /**
  * Created by Sathwik on 05-08-2016.
  */
-public class DataBaseHandler extends SQLiteOpenHelper {
-    // All Static variables
+public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
-
     // Database Name
     private static final String DATABASE_NAME = "eventsManager";
-
     // events table name
     private static final String TABLE_EVENTS = "events";
-
     // events Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";

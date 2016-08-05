@@ -3,93 +3,67 @@ package com.saarang.android.eventsaarang;
 /**
  * Created by Sathwik on 05-08-2016.
  */
-public class Event {//private variables
-    int _id, _image_id;
-    String _time;
-    String _title;
-    String _subtitle;
-    String _day;
+public class Event {
+    //private variables
+    int id, img_id;
+    String time;    //TODO - better to make this a Calendar
+    String day;     //TODO - better to make this a Calendar
+    String title;
+    String subtitle;
+    //List PrizeMoney; //TODO - add extra fields
+    //String venue;
+    //double coordinates[2];
+    //ContactInfo contacts;
 
-    // Empty constructor
-    public Event() {
+    public Event(){}
 
+    //Constructor
+    public Event(String title, String subtitle, String day, String time, int img_id) {
+        this.title = title;
+        this.subtitle = subtitle;
+        this.day = day;
+        this.time = time;
+        this.img_id = img_id;
     }
 
-    // constructor
-    public Event(int id, String title, String subtitle, String day, String time) {
-        this._id = id;
-        this._title = title;
-        this._subtitle = subtitle;
-        this._day = day;
-        this._time = time;
-    }
-
-    // constructor
-    public Event(String title, String subtitle, String day, String time, int _image_id) {
-        this._title = title;
-        this._subtitle = subtitle;
-        this._day = day;
-        this._time = time;
-        this._image_id = _image_id;
-    }
-
-    // getting ID
+    //Get functions
     public int getID() {
-        return this._id;
+        return id;
     }
-
-    // setting ID
-    public void setID(int id) {
-        this._id = id;
-    }
-
-    // getting title
     public String getTitle() {
-        return this._title;
+        return title;
     }
-
-    // setting title
-    public void setTitle(String title) {
-        this._title = title;
-    }
-
-    // getting subtitle
     public String getSubtitle() {
-        return this._subtitle;
+        return subtitle;
     }
-
-    // setting subtitle
-    public void setSubtitle(String subtitle) {
-        this._subtitle = subtitle;
-    }
-
-    // getting day
     public String getDay() {
-        return this._day;
+        return day;
     }
-
-    // setting day
-    public void setDay(String day) {
-        this._day = day;
-    }
-
-    //setting time
-    public void setTime(String time) {
-        this._time = time;
-    }
-
-    //getting time
-    public String getTime() {
-        return _time;
-    }
-
-    //settint image id
-    public void set_image_id(int image_id) {
-        this._image_id = image_id;
-    }
-
-    //getting image id
     public int get_image_id() {
-        return _image_id;
+        return img_id;
     }
+    public String getTime() {
+        return time;
+    }
+
+    //Set functions
+    public void setID(int id) {
+        this.id = id;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+    public void setDay(String day) {
+        this.day = day;
+    }
+    public void setTime(String time) {
+        this.time = time;
+    }
+    public void set_image_id(int img_id) {
+        this.img_id = img_id;
+    }
+
 }
