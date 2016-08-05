@@ -10,30 +10,36 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
-//TODO-app is crashing. Find out why!
 /**
  * Created by Abhi on 8/5/2016.
  */
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     //List which will hold the data
-    private List<String> titles; //TODO - draw the class
+    private List<String> titles; //TODO - draw the list of objects from the CategoryAdapter class
 
     //Constructor - assigns values to the list of data items
     public EventAdapter(List<String> titles) {
-        this.titles = titles;//TODO
+        this.titles = titles; //TODO
     }
 
     /*This is the class that implements the ViewHolder*/
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView title; //TODO
+        TextView title,description; //TODO -add extra fields
 
         private final Context context;
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
             title  = (TextView) itemView.findViewById(R.id.tv_eventTitle);
+            //TODO - add this
+//            if(isFavorite)
+//                Glide.with(context).load(R.drawable.ic_star_black_24dp).into(fab);
+//            else
+//                Glide.with(context).load(R.drawable.ic_star_border_black_24dp).into(fab);
             itemView.setClickable(true);
             itemView.setOnClickListener(this);
             //image = (ImageView) itemView.findViewById(R.id.image1);
@@ -41,12 +47,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         //Function called when user clicks on any ViewHolder in RecyclerView
         @Override
         public void onClick(View v) {
-
                 Toast.makeText(context, "Event Page!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, SecondActivity.class);
-                context.startActivity(intent);
-
-            //the card click will be taken care of inside the card recycler view
+                Intent intent = new Intent(context, DetailsActivity.class);
+                context.startActivity(intent);      //TODO - also have to send the position
         }
     }
 
@@ -62,7 +65,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(EventAdapter.ViewHolder holder, int position) {
         holder.title.setText(this.titles.get(position));
         //      holder.subtitle.setText(this.dataList.get(position).getSubtitle());
-//        holder.position = position;
+        //        holder.position = position;
         //int id = context.getResources().getIdentifier("saarang1", "drawable", "R");
         //holder.image.setImageResource(id);
     }

@@ -14,6 +14,7 @@ public class Event {
     //String venue;
     //double coordinates[2];
     //ContactInfo contacts;
+    //boolean favorite;
 
     public Event(){}
 
