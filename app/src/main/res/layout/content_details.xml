@@ -18,6 +18,10 @@
             android:id="@+id/event_time_venue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="24dp"
             android:background="@android:color/darker_gray"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true">
@@ -56,6 +60,9 @@
             android:id="@+id/event_description_prize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:background="@android:color/darker_gray"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true">
@@ -66,6 +73,7 @@
                 android:background="@color/cardview_light_background">
 
                 <ImageView
+                    android:id="@+id/icon_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -75,36 +83,41 @@
                     android:src="@drawable/ic_info_outline_white_24dp"
                     android:tint="@color/colorPrimaryDark" />
 
-                <RelativeLayout
+
+                <TextView
                     android:id="@+id/event_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="72dp"
-                    android:background="@android:color/darker_gray"
+                    android:layout_marginLeft="@dimen/card_icon_text_separation"
+                    android:layout_toRightOf="@id/icon_info"
+                    android:background="@color/cardview_light_background"
                     android:gravity="center_vertical"
-                    android:paddingBottom="0.1dp">
+                    android:paddingBottom="16dp"
+                    android:paddingRight="@dimen/card_right_padding"
+                    android:paddingTop="16dp"
+                    android:text="Introducing our one and only solo singing competition Alankar where you can battle it out with over a hundred vocalists while being judged by the best singing talents out there."
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/cardview_light_background"
-                        android:paddingBottom="16dp"
-                        android:paddingRight="32dp"
-                        android:paddingTop="16dp"
-                        android:text="Introducing our one and only solo singing competition Alankar where you can battle it out with over a hundred vocalists while being judged by the best singing talents out there."
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/bg_separating_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.01dp"
+                    android:layout_below="@id/event_description"
+                    android:layout_marginLeft="@dimen/card_icon_text_separation"
+                    android:layout_toRightOf="@id/icon_info"
+                    android:foreground="@android:color/darker_gray" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/event_description"
+                    android:layout_below="@id/bg_separating_line"
+                    android:layout_marginLeft="@dimen/card_icon_text_separation"
+                    android:layout_toRightOf="@id/icon_info"
                     android:background="@color/cardview_light_background"
                     android:paddingBottom="16dp"
-                    android:paddingLeft="72dp"
-                    android:paddingRight="32dp"
-                    android:paddingTop="16sp"
+                    android:paddingRight="@dimen/card_right_padding"
+                    android:paddingTop="16dp"
                     android:text="Prize money worth 15,000 INR"
                     android:textColor="#000000"
                     android:textSize="16sp" />
@@ -114,6 +127,9 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true">
 
@@ -130,10 +146,12 @@
                     android:foreground="?attr/selectableItemBackground">
 
                     <ImageView
+                        android:id="@+id/icon_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
+                        android:layout_marginBottom="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:src="@drawable/ic_phone_white_24dp"
@@ -146,10 +164,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="72dp"
-                        android:gravity="center_vertical|left"
-                        android:minHeight="72dp"
-                        android:paddingRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="@dimen/card_icon_text_separation"
+                        android:layout_marginTop="16dp"
+                        android:layout_toRightOf="@id/icon_phone"
+                        android:gravity="left"
+                        android:paddingRight="@dimen/card_right_padding"
                         android:text="Sathwik Chadaga
 7734015693"
                         android:textColor="#000000"
@@ -159,7 +179,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.1dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="72dp"
+                        android:layout_marginLeft="@dimen/card_icon_text_separation"
+                        android:layout_toRightOf="@id/icon_phone"
                         android:background="@android:color/darker_gray" />
 
                 </RelativeLayout>
@@ -172,10 +193,12 @@
                     android:foreground="?attr/selectableItemBackground">
 
                     <ImageView
+                        android:id="@+id/icon_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
+                        android:layout_marginBottom="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:src="@drawable/ic_email_white_24dp"
@@ -186,10 +209,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="72dp"
-                        android:gravity="center_vertical|left"
-                        android:minHeight="72dp"
-                        android:paddingRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="@dimen/card_icon_text_separation"
+                        android:layout_marginTop="16dp"
+                        android:layout_toRightOf="@id/icon_email"
+                        android:gravity="left"
+                        android:paddingRight="@dimen/card_right_padding"
                         android:text="chadagasathwik@gmail.com"
                         android:textColor="#000000"
                         android:textSize="16sp" />

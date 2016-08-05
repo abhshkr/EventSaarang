@@ -1,5 +1,6 @@
 package com.saarang.android.eventsaarang;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -24,15 +25,18 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Context context = getApplicationContext();
+        DataBaseHandler db = new DataBaseHandler(context);
+        Event event = db.getEvent(9);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         if (collapsingToolbar != null) {
-            collapsingToolbar.setTitle("Decibels");
+            collapsingToolbar.setTitle(event.getTitle());
         }
 
         final ImageView eventImage = (ImageView) findViewById(R.id.event_image);
-        Glide.with(this).load(R.drawable.saarang).centerCrop().into(eventImage);
+        Glide.with(this).load(event.get_image_id()).centerCrop().into(eventImage);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

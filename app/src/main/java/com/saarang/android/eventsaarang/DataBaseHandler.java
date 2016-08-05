@@ -120,4 +120,23 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
         return count;
 
     }
+
+    // Getting single event
+    Event getEvent(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_EVENTS, new String[] { KEY_ID,
+                        KEY_TITLE, KEY_SUB_TITLE, KEY_DAY, KEY_TIME, KEY_IMAGE }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Event event = null;
+        if (cursor != null) {
+            event = new Event(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5));
+        }
+
+        // return event
+        return event;
+    }
 }
