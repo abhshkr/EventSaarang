@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 public class DetailsActivity extends AppCompatActivity {
 
     @Override
@@ -22,20 +24,26 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        collapsingToolbar.setTitle("Decibels");
+        if (collapsingToolbar != null) {
+            collapsingToolbar.setTitle("Decibels");
+        }
 
         final ImageView eventImage = (ImageView) findViewById(R.id.event_image);
-        eventImage.setImageResource(R.drawable.saarang);
+        Glide.with(this).load(R.drawable.saarang).centerCrop().into(eventImage);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), com.saarang.android.eventsaarang.DetailsActivity.class));
-            }
-        });
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.getContext().startActivity(new Intent(view.getContext(), DetailsActivity.class));
+                }
+            });
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
