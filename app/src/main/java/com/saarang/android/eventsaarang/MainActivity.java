@@ -1,13 +1,15 @@
 package com.saarang.android.eventsaarang;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,22 +18,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<String> titleList = Arrays.asList("Music Events", "Classical Events", "Word Games");
-        RecyclerView RV_category = (RecyclerView) findViewById(R.id.rv_categories);
-        if (RV_category != null) {
-            RV_category.setLayoutManager(new LinearLayoutManager(this));
-        }
-        if (RV_category != null) {
-            RV_category.setAdapter(new CategoryAdapter(titleList));
-        }
+        List<String> titleList  = Arrays.asList("Music Events", "Classical Events", "Word Games");
+        RecyclerView RV_category= (RecyclerView) findViewById(R.id.rv_categories);
+        RV_category.setLayoutManager(new LinearLayoutManager(this));
+        RV_category.setAdapter( new CategoryAdapter(titleList) );
 
-        RecyclerView RV_eventHorizontal = (RecyclerView) findViewById(R.id.rv_eventHorizontal);
-        if (RV_eventHorizontal != null) {
-            RV_eventHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        }
-        if (RV_eventHorizontal != null) {
-            RV_eventHorizontal.setAdapter(new EventAdapter(titleList));
-        }
+//        RecyclerView RV_eventHorizontal = (RecyclerView) findViewById(R.id.rv_eventHorizontal);
+//        if (RV_eventHorizontal != null) {
+//            RV_eventHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+//        }
+//        if (RV_eventHorizontal != null) {
+//            RV_eventHorizontal.setAdapter( new EventAdapter(titleList) );
+//        }
 
 
         boolean firstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstRun", true);
@@ -42,51 +40,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void firstRunOperations() {
-
+    private void firstRunOperations(){
         DataBaseHandler db = new DataBaseHandler(this);
+        db.addEvent(new Event("Alankar", "Light Music", "1", "CLT, 9:30 AM", R.drawable.saarang_alankar));
+        db.addEvent(new Event("Decibels", "Western Music", "1", "SAC, 10:30 AM",R.drawable.saarang_decibels));
+        db.addEvent(new Event("Flash Fiction", "Writing", "1", "CRC 205, 11:05 AM", R.drawable.saarang_street));
+        db.addEvent(new Event("Solo Dance", "Classical Arts", "1", "Seminar Hall, 1:30 PM", R.drawable.saarang_vox));
+        db.addEvent(new Event("India Quiz", "Quizzing", "1", "OAT, 2:00 PM", R.drawable.saarang_alankar));
 
-//        Event(
-//          int EVENT_ID,
-//          int CATEGORY_ID,
-//          String TITLE,
-//          String SUBTITLE,
-//          String DESCRIPTION,
-//          String VENUE,
-//          Calendar START_TIME,
-//          double EVENT_DURATION,
-//          List<String> PRIZE_MONEY,
-//          List<Contact> CONTACTS,
-//          int IMAGE_ID
-//        )
+        db.addEvent(new Event("Raagapella", "Light Music", "2", "SAC, 10:30 AM",R.drawable.saarang_decibels));
+        db.addEvent(new Event("Streets", "Choreo", "2", "CLT, 9:30 AM", R.drawable.saarang_alankar));
+        db.addEvent(new Event("TinyTales WS", "Writing", "2", "CRC 205, 11:05 AM",R.drawable.saarang_decibels));
+        db.addEvent(new Event("Vocals", "Classical Arts", "2", "Seminar Hall, 1:30 PM", R.drawable.saarang_street));
+        db.addEvent(new Event("Lone Wolf", "Quizzing", "2", "OAT, 2:00 PM", R.drawable.saarang_alankar));
 
-        db.addEvent(new Event(1,
-                1,
-                "Alankar",
-                "Light Music",
-                "Introducing our one and only solo singing competition Alankar where you can battle it out with over a hundred vocalists while being judged by the best singing talents out there.",
-                "CLT",
-                new GregorianCalendar(2017, 0/*Month*/, 2/*dayOfMonth*/, 10/*hourOfDay*/, 30/*minute*/),
-                1.5,
-                Arrays.asList("\u20B9"+"2000", "₹1000", "500"),
-                Arrays.asList(new Contact("Sathwik", "7734015692", "chadagasathwik@gmail.com"),
-                        new Contact("Abhishek", "7092176688", "abhishekaroor@gmail.com")),
-                R.drawable.saarang_alankar));
-
-        db.addEvent(new Event(2,
-                1,
-                "Decibels",
-                "Western Music",
-                "Introducing our one and only solo singing competition Alankar where you can battle it out with over a hundred vocalists while being judged by the best singing talents out there.",
-                "CLT",
-                new GregorianCalendar(2017, 0/*Month*/, 3/*dayOfMonth*/, 9/*hourOfDay*/, 15/*minute*/),
-                1,
-                Arrays.asList("5000", "3000", "1000"),
-                Arrays.asList(new Contact("Sathwik", "7734015692", "chadagasathwik@gmail.com"),
-                        new Contact("Abhishek", "7092176688", "abhishekaroor@gmail.com")),
-                R.drawable.saarang_decibels));
-
-        //Messages
+        db.addEvent(new Event("Vox", "Western Music", "3", "CRC 205, 11:05 AM", R.drawable.saarang_vox));
+        db.addEvent(new Event("Dance WS", "Choreo", "3", "OAT, 2:00 PM", R.drawable.saarang_alankar));
+        db.addEvent(new Event("Creative Writing", "Writing", "3", "SAC, 10:30 AM", R.drawable.saarang_street));
+        db.addEvent(new Event("Instrumentals ", "Classical Arts", "3", "Seminar Hall, 1:30 PM", R.drawable.saarang_alankar));
+        db.addEvent(new Event("Spent Quiz", "Quizzing", "3", "CLT, 9:30 AM",R.drawable.saarang_decibels));
+        //Success Messages
+        Log.d("DATABASE: ", "Created!");
         Toast toast = Toast.makeText(getApplicationContext(), "Database Created!", Toast.LENGTH_LONG);
         toast.show();
 
@@ -95,5 +69,4 @@ public class MainActivity extends AppCompatActivity {
                 .putBoolean("firstRun", false)
                 .commit();
     }
-
 }
