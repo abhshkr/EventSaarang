@@ -5,15 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by Sathwik on 05-08-2016.
  */
 public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
+
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
@@ -21,11 +26,17 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
     // events table name
     private static final String TABLE_EVENTS = "events";
     // events Table Columns names
-    private static final String KEY_ID = "id";
+
+    private static final String KEY_EVENT_ID = "eventId";
+    private static final String KEY_CATEGORY_ID = "categoryId";
     private static final String KEY_TITLE = "title";
-    private static final String KEY_SUB_TITLE = "subtitle";
-    private static final String KEY_DAY = "day";
-    private static final String KEY_TIME = "time";
+    private static final String KEY_SUBTITLE = "subtitle";
+    private static final String KEY_DESRIPTION = "description";
+    private static final String KEY_VENUE = "venue";
+    private static final String KEY_START_TIME = "time";
+    private static final String KEY_DURATION = "duration";
+    private static final String KEY_PRIZE = "prize";
+    private static final String KEY_CONTACTS = "contacts1";
     private static final String KEY_IMAGE = "image";
 
     public DataBaseHandler(Context context) {
@@ -37,11 +48,16 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_EVENT_ID + " INTEGER PRIMARY KEY,"
+                + KEY_CATEGORY_ID + " INTEGER,"
                 + KEY_TITLE + " TEXT,"
-                + KEY_SUB_TITLE + " TEXT,"
-                + KEY_DAY + " TEXT,"
-                + KEY_TIME + " TEXT,"
+                + KEY_SUBTITLE + " TEXT,"
+                + KEY_DESRIPTION + " TEXT,"
+                + KEY_VENUE + " TEXT,"
+                + KEY_START_TIME + " TEXT,"
+                + KEY_DURATION + " REAL,"
+                + KEY_PRIZE + " TEXT,"
+                + KEY_CONTACTS + " TEXT,"
                 + KEY_IMAGE + " INTEGER" + ")";
 
         db.execSQL(CREATE_EVENTS_TABLE);
@@ -62,6 +78,17 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
      * All CRUD(Create, Read, Update, Delete) Operations
      */
 
+    Gson gsonTime = new Gson(),
+            gsonPrize = new Gson(),
+            gsonContacts = new Gson();
+
+    Type typeTime = new TypeToken<Calendar>() {
+    }.getType(),
+            typePrize = new TypeToken<List<String>>() {
+            }.getType(),
+            typeContacts = new TypeToken<List<Contact>>() {
+            }.getType();
+
     // Adding new event
     void addEvent(Event event) {
 
@@ -69,11 +96,39 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_TITLE, event.getTitle()); // Event Title
-        values.put(KEY_SUB_TITLE, event.getSubtitle()); // Event Subtitle
-        values.put(KEY_DAY, event.getDay()); // Event Day
-        values.put(KEY_TIME, event.getTime()); // Event time
-        values.put(KEY_IMAGE, event.get_image_id()); //Event image
+        //        Event(
+//          int EVENT_ID,
+//          int CATEGORY_ID,
+//          String TITLE,
+//          String SUBTITLE,
+//          String DESCRIPTION,
+//          String VENUE,
+//          Calendar START_TIME,
+//          double EVENT_DURATION,
+//          List<String> PRIZE_MONEY,
+//          List<Contact> CONTACTS,
+//          int IMAGE_ID
+//        )
+        values.put(KEY_EVENT_ID, event.getEventId());
+        values.put(KEY_CATEGORY_ID, event.getCatId());
+        values.put(KEY_TITLE, event.getTitle());
+        values.put(KEY_SUBTITLE, event.getSubtitle());
+        values.put(KEY_DESRIPTION, event.getDescription());
+        values.put(KEY_VENUE, event.getVenue());
+
+
+        String jsonTime = gsonTime.toJson(event.getStartTime(), typeTime);
+        values.put(KEY_START_TIME, jsonTime);
+
+        values.put(KEY_DURATION, event.getDuration());
+
+        String jsonPrize = gsonPrize.toJson(event.getPrizeMoney(), typePrize);
+        values.put(KEY_PRIZE, jsonPrize);
+
+        String jsonContacts = gsonContacts.toJson(event.getContacts(), typeContacts);
+        values.put(KEY_CONTACTS, jsonContacts);
+
+        values.put(KEY_IMAGE, event.getImageId());
 
         // Inserting Row
         db.insert(TABLE_EVENTS, null, values);
@@ -81,26 +136,38 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
     }
 
     // Getting All Events on a specific day
-    public List<Event> getEvents(int day) {
+    public List<Event> getEvents(int categoryID) {
 
         List<Event> eventList = new ArrayList<Event>();
 
         // Select required events from Query
-        String selectQuery = "SELECT  * FROM " + TABLE_EVENTS + " WHERE " + KEY_DAY + " == " + String.valueOf(day);
+        String selectQuery = "SELECT  * FROM " + TABLE_EVENTS + " WHERE " + KEY_CATEGORY_ID + " == " + String.valueOf(categoryID);
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.i("Hello: ", "" + cursor.getCount());
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
                 Event event = new Event();
-                event.setID(Integer.parseInt(cursor.getString(0)));
-                event.setTitle(cursor.getString(1));
-                event.setSubtitle(cursor.getString(2));
-                event.setDay(cursor.getString(3));
-                event.setTime(cursor.getString(4));
-                event.set_image_id(cursor.getInt(5));
+                event.setEventId(cursor.getInt(0));
+                event.setCatId(cursor.getInt(1));
+                event.setTitle(cursor.getString(2));
+                event.setSubtitle(cursor.getString(3));
+                event.setDescription(cursor.getString(4));
+                event.setVenue(cursor.getString(5));
+
+                Calendar time = gsonTime.fromJson(cursor.getString(6), typeTime);
+                event.setStartTime(time);
+
+                event.setDuration(cursor.getDouble(7));
+
+                List<String> prize = gsonPrize.fromJson(cursor.getString(8), typePrize);
+                event.setPrizeMoney(prize);
+
+                List<Contact> contacts = gsonContacts.fromJson(cursor.getString(9), typeContacts);
+                event.setContacts(contacts);
+
+                event.setImageId(cursor.getInt(10));
 
                 // Adding event to list
                 eventList.add(event);
@@ -110,8 +177,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
         return eventList;
     }
 
-    public int getEventsCount(int day) {
-        String countQuery = "SELECT  * FROM " + TABLE_EVENTS + " WHERE " + KEY_DAY + " == " + String.valueOf(day);
+    public int getEventsCount(int cat) {
+        String countQuery = "SELECT  * FROM " + TABLE_EVENTS + " WHERE " + KEY_CATEGORY_ID + " == " + String.valueOf(cat);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
@@ -122,20 +189,49 @@ public class DataBaseHandler extends SQLiteOpenHelper {// All Static variables
     }
 
     // Getting single event
-    Event getEvent(int id) {
+    Event getEvent(int eventId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_EVENTS, new String[] { KEY_ID,
-                        KEY_TITLE, KEY_SUB_TITLE, KEY_DAY, KEY_TIME, KEY_IMAGE }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_EVENTS,
+                new String[]{KEY_EVENT_ID,
+                        KEY_CATEGORY_ID,
+                        KEY_TITLE,
+                        KEY_SUBTITLE,
+                        KEY_DESRIPTION,
+                        KEY_VENUE,
+                        KEY_START_TIME,
+                        KEY_DURATION,
+                        KEY_PRIZE,
+                        KEY_CONTACTS,
+                        KEY_IMAGE},
+                KEY_EVENT_ID + "=?",
+                new String[]{String.valueOf(eventId)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Event event = null;
+        Event event = new Event();
         if (cursor != null) {
-            event = new Event(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5));
-        }
+            event.setEventId(cursor.getInt(0));
+            event.setCatId(cursor.getInt(1));
+            event.setTitle(cursor.getString(2));
+            event.setSubtitle(cursor.getString(3));
+            event.setDescription(cursor.getString(4));
+            event.setVenue(cursor.getString(5));
 
+            Calendar time = gsonTime.fromJson(cursor.getString(6), typeTime);
+            event.setStartTime(time);
+
+            event.setDuration(cursor.getDouble(7));
+
+            List<String> prize = gsonPrize.fromJson(cursor.getString(8), typePrize);
+            event.setPrizeMoney(prize);
+
+            List<Contact> contacts = gsonContacts.fromJson(cursor.getString(9), typeContacts);
+            event.setContacts(contacts);
+
+            event.setImageId(cursor.getInt(10));
+        }
+        cursor.close();
         // return event
         return event;
     }

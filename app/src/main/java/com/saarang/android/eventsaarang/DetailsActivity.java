@@ -27,7 +27,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Context context = getApplicationContext();
         DataBaseHandler db = new DataBaseHandler(context);
-        Event event = db.getEvent(15);
+        Event event = db.getEvent(2);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -36,16 +36,17 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         final ImageView eventImage = (ImageView) findViewById(R.id.event_image);
-        Glide.with(this).load(event.get_image_id()).centerCrop().into(eventImage);
+        Glide.with(this).load(event.getImageId()).centerCrop().into(eventImage);
 
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
-            Glide.with(context).load(R.drawable.ic_star_border_white_24dp).into(fab);
+            Glide.with(context).load(R.drawable.ic_star_white_24dp).into(fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // TODO: view.getContext().startActivity(new Intent(view.getContext(), MySchedule.class));
+                    // TODO: Show Snackbar
                     Glide.with(context).load(R.drawable.ic_star_white_24dp).into(fab);
                 }
             });
