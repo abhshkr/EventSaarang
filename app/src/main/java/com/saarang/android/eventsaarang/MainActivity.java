@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         RV_category.setLayoutManager(new LinearLayoutManager(this));
         RV_category.setAdapter( new CategoryAdapter(titleList) );
 
+
 //        RecyclerView RV_eventHorizontal = (RecyclerView) findViewById(R.id.rv_eventHorizontal);
 //        if (RV_eventHorizontal != null) {
 //            RV_eventHorizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));

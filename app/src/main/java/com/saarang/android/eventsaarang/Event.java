@@ -14,7 +14,7 @@ public class Event {
     //String venue;
     //double coordinates[2];
     //ContactInfo contacts;
-    //boolean favorite;
+    boolean favorite;
 
     public Event(){}
 
@@ -67,4 +67,11 @@ public class Event {
         this.img_id = img_id;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 }

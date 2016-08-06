@@ -25,6 +25,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     //Constructor - assigns values to the list of data items
     public CategoryAdapter(List<String> titles) {
         this.titles = titles;
+
     }
 
     /*This is the class that implements the ViewHolder*/
@@ -43,7 +44,6 @@ RecyclerView RV_eventHorizontal;
             title  = (TextView) itemView.findViewById(R.id.tv_catTitle);
             seeAll.setClickable(true);
             seeAll.setOnClickListener(this);
-            //image = (ImageView) itemView.findViewById(R.id.image1);
         }
         //Function called when user clicks on any ViewHolder in RecyclerView
         @Override
@@ -51,7 +51,7 @@ RecyclerView RV_eventHorizontal;
             //depends on the view clicked
             if(v.getId()==R.id.tv_seeAll) {
                 Toast.makeText(context, "GridLayout Page!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, DetailsActivity.class);
+                Intent intent = new Intent(context, EventsInCategory.class);
                 context.startActivity(intent);
             }
             //the card click will be taken care of inside the card recycler view
@@ -72,7 +72,7 @@ RecyclerView RV_eventHorizontal;
         List<String> titleList  = Arrays.asList("Music Events", "Classical Events", "Word Games");
 
         if (holder.RV_eventHorizontal != null) {
-            holder.RV_eventHorizontal.setAdapter( new EventAdapter(titleList) );
+            holder.RV_eventHorizontal.setAdapter( new EventAdapter(titleList, R.layout.event_item) );
         }
   //      holder.subtitle.setText(this.dataList.get(position).getSubtitle());
 //        holder.position = position;
